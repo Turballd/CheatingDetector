@@ -7,7 +7,7 @@ var canvaselement = document.querySelector('#canvasElement');
 var ctx = canvaselement.getContext('2d', { alpha: false });
 var canvasInterval = null;
 var fps=60, xPos = 0, yPos = 0, count = 0;
-var audio = new Audio('https://github.com/Turballed/CheatingDetector/blob/main/audio/Cheating.mp3?raw=true');
+var audio = new Audio('https://github.com/Turballed/CheatingDetector/main/Cheating.mp3?raw=true');
 document.addEventListener("click", getMousePos);
 
 if (videoelement) {
