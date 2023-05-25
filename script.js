@@ -1,13 +1,14 @@
 var videoelement = document.getElementById("videoElement");
 var streamContraints = {
-    audio: true,
+    audio: false,
     video: { width: 1920, height: 1080 },
 };
 var canvaselement = document.querySelector('#canvasElement');
 var ctx = canvaselement.getContext('2d', { alpha: false });
 var canvasInterval = null;
-var fps=60
-
+var fps=60, xPos = 0, yPos = 0, count = 0;
+var audio = new Audio('cheating.mp3');
+document.addEventListener("click", getMousePos);
 
 if (videoelement) {
     navigator.mediaDevices
@@ -25,12 +26,24 @@ function gotStream(stream) {
     videoelement.play()
 }
 
-
-function drawImage(video) {
+function getMousePos(event){
+    xPos = event.clientX;
+    yPos = event.clientY;
+}   
+  
+function drawImage(video){
+    if(count >= 160){
+        audio.play()
+    }
     ctx.drawImage(video, 0, 0, canvaselement.width, canvaselement.height);
-    var data = ctx.getImageData(0, 0, 300, 400).data;
-    console.log(data);
+    var data = ctx.getImageData(xPos, yPos, 1, 1).data;
+    if(data[0] < 20){
+        count = 0;
+    }else if(data[0] >= 20){
+        count++;
+    }
 }
+
 canvasInterval = window.setInterval(() => {
     drawImage(videoelement);
 }, 1000 / fps);
